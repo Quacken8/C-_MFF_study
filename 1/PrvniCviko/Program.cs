@@ -1,0 +1,4 @@
+﻿// See https://aka.ms/new-console-template for more information
+Console.WriteLine("Hello, World!");
+
+Console.WriteLine("Ok ty debílku, tak snad už funguje C# pro VSCode.\nSolution pro všechny projekty ve složce vyrobíš pomocí 'dotnet new sln -n 'Jméno' '.\nProjekty do něj přidáš pomocí 'dotnet sln Jméno.sln add **/*.csproj' kde ten kentus na konci automaticky přidá všechy *.csproj v podsložkách.\nNový projekt včetně složky vyrob pomocí 'dotnet new console -n 'Jméno'', kde 'console' je template pro console program.\nNovou library přidáš pomocí 'dotnet new classlib -n 'Jméno' '.\nTyhle knihovny přidáš do projektů pomocí dotnet add Jméno.csproj reference JménoLibrary.csproj.\nPraktický je pak otevřít Code ve složce se solution aby ti nabíd automaticky přidat nějaký config kolem");

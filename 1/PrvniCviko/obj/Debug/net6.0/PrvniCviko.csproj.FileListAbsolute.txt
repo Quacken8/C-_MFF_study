@@ -1,0 +1,15 @@
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/bin/Debug/net6.0/PrvniCviko
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/bin/Debug/net6.0/PrvniCviko.deps.json
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/bin/Debug/net6.0/PrvniCviko.runtimeconfig.json
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/bin/Debug/net6.0/PrvniCviko.dll
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/bin/Debug/net6.0/PrvniCviko.pdb
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.csproj.AssemblyReference.cache
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.GeneratedMSBuildEditorConfig.editorconfig
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.AssemblyInfoInputs.cache
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.AssemblyInfo.cs
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.csproj.CoreCompileInputs.cache
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.dll
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/refint/PrvniCviko.dll
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.pdb
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/PrvniCviko.genruntimeconfig.cache
+/home/ondra/Dokumenty/C#_MFF/1/PrvniCviko/obj/Debug/net6.0/ref/PrvniCviko.dll
