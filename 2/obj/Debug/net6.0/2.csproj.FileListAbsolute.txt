@@ -1,0 +1,15 @@
+/home/ondra/Dokumenty/C#_MFF/2/bin/Debug/net6.0/2
+/home/ondra/Dokumenty/C#_MFF/2/bin/Debug/net6.0/2.deps.json
+/home/ondra/Dokumenty/C#_MFF/2/bin/Debug/net6.0/2.runtimeconfig.json
+/home/ondra/Dokumenty/C#_MFF/2/bin/Debug/net6.0/2.dll
+/home/ondra/Dokumenty/C#_MFF/2/bin/Debug/net6.0/2.pdb
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.csproj.AssemblyReference.cache
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.GeneratedMSBuildEditorConfig.editorconfig
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.AssemblyInfoInputs.cache
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.AssemblyInfo.cs
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.csproj.CoreCompileInputs.cache
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.dll
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/refint/2.dll
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.pdb
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/2.genruntimeconfig.cache
+/home/ondra/Dokumenty/C#_MFF/2/obj/Debug/net6.0/ref/2.dll
