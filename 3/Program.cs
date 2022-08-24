@@ -1,16 +1,4 @@
-﻿
-InputOutputHandler ioh = new InputOutputHandler(Console.ReadLine());
-
-while (true){
-    // ioh read
-
-    // line calculate
-
-    // ioh write
-    Line line = new Line(ioh.symbolsPerLine);
-}
-
-public class Line {
+﻿public class Line {
     public Line(int symbolsOLine, string[] arrayOfWords){
         symbolsPerLine = symbolsOLine;
         lineWords = arrayOfWords;
@@ -104,7 +92,7 @@ public class InputOutputHandler{
     }
 
     string[] readWords(){
-        string[] arrayOfWords;
+        string[] arrayOfWords = {};
         int numOfChars = 0;
         string lastReadWord;
         while (true){
@@ -119,4 +107,15 @@ public class InputOutputHandler{
         }
         return arrayOfWords;
     }
+}
+
+InputOutputHandler ioh = new InputOutputHandler(Console.ReadLine());
+
+while (true){
+    // ioh read
+    ioh.readWords();
+    // line calculate
+
+    // ioh write
+    //Line line = new Line(ioh.symbolsPerLine);
 }
