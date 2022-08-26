@@ -1,10 +1,5 @@
-﻿//string userInput = args[0] + args[1];  // first get the user input; this may not be how its supposed to be used, cuz i aint waiting for a readline, its supposed to be called as an argument←
-
-#define gaelol
-
-char[] paragraphEnderChars = {'\n'};
-string userInput = "file.txt formattedfile.txt 30";
-InputOutputHandler Ioh = new InputOutputHandler( userInput , paragraphEnderChars );
+﻿char[] paragraphEnderChars = {'\n'};
+InputOutputHandler Ioh = new InputOutputHandler( args , paragraphEnderChars );
 
 LineHandler Lh = new LineHandler( Ioh , paragraphEnderChars );
 
@@ -49,34 +44,41 @@ class LineHandler {
         /// returns the number of symbols in an array of strings that represent the words on this line
         int num = 0;
         foreach (string word in array){
-            if (word.Last() == '\n') {
-                num += word.Length-1;
-            }
-            else {
-                num += word.Length;
-            }
+            num += word.Length;
         }
         return num;
     }
 
+    bool fitsOnLine(List<string> lineWords, string wordToAppend, int symbolsPerLine){
+        if (paragraphEnderChars.Contains(wordToAppend.Last())) {
+            return getNumOfSymbols(lineWords) + lineWords.Count-1 + wordToAppend.Length -1 < symbolsPerLine;
+        }
+        return getNumOfSymbols(lineWords) + lineWords.Count-1 + wordToAppend.Length < symbolsPerLine;
+    }
 
     public void appendNewWord(string wordToAppend) {
-        List<string> newLineWords = lineWords.Append(wordToAppend).ToList();
-        if (getNumOfSymbols(newLineWords) + newLineWords.Count-1  < symbolsPerLine && !paragraphEnderChars.Contains(wordToAppend.Last())){ // check if u have space on the line for this new word
+        if (paragraphEnderChars.Contains(wordToAppend.Last()) && fitsOnLine(lineWords, wordToAppend, symbolsPerLine)) { // that means we at the end of the paragraph, so just print it reguralrly
+            lineWords.Add(wordToAppend);
+            // write the line using iohandler
+            var text = lineWords;
+            int normalSpaces = 1;
+            int lastSpace = 1;
+            iohandler.writeFormattedOutput(text, normalSpaces, lastSpace);
+            lineWords = new List<string>();
+            return;
+        }
+        if (fitsOnLine(lineWords, wordToAppend, symbolsPerLine)){ // check if u have space on the line for this new word
             lineWords.Add(wordToAppend);
             return;
         }
-        if (paragraphEnderChars.Contains(wordToAppend.Last())) { // that means we at the end of the paragraph, so just print it reguralrly
-            calculateLineSpaceSizes(justLeftJustify : true);
-            IOHandlerWriteArguments paramsForWriting = prepareOutputLine();
-            // write the line using iohandler
-            var text = paramsForWriting.text;
-            int normalSpaces = paramsForWriting.sizeOfMostSpaces;
-            int lastSpace = paramsForWriting.sizeOfLastSpace;
+        if (lineWords.Count == 0 && wordToAppend.Length>=symbolsPerLine){ // so we already have a line of a single word. Its too long but hey, we gotta do it
+            var text = new List<string> {wordToAppend};
+            int normalSpaces = 1;
+            int lastSpace = 1;
             iohandler.writeFormattedOutput(text, normalSpaces, lastSpace);
-            lineWords = new List<string>();
+            return;
         }
-        else { // ok so the line woud overflow, lets write it down
+        else { // ok so the line woud overflow but it aint a massive piece of word, lets write it down
             calculateLineSpaceSizes();
             IOHandlerWriteArguments paramsForWriting = prepareOutputLine();
             // write the line using iohandler
@@ -85,14 +87,14 @@ class LineHandler {
             int lastSpace = (int)paramsForWriting.sizeOfLastSpace;
             iohandler.writeFormattedOutput(text, normalSpaces, lastSpace);
             lineWords = new List<string>();
-            lineWords.Add(wordToAppend);
+            this.appendNewWord(wordToAppend);
         }
     }
 
-    public void calculateLineSpaceSizes(bool justLeftJustify = false){
+    public void calculateLineSpaceSizes(){
         /// from words to be put on a line calculates the spaces for that line
         int numOfWords = lineWords.Count;
-        if (numOfWords == 1 || justLeftJustify == true){ // a single word being written down
+        if (numOfWords == 1){ // a single word being written down
             this.sizeOfLastSpace = 1;
             this.sizeOfMostSpaces = 1;
         }
@@ -117,22 +119,25 @@ class InputOutputHandler{
     public int symbolsPerLine;
     char[] paragraphEnderChars;
 
-    public InputOutputHandler(string input, char[] paragraphEnderChars){
+    public InputOutputHandler(string[] input, char[] paragraphEnderChars){
         /// reads the input from Console, which is expected in such a format: "input.txt" "output.txt" "#symbols/line"
         this.paragraphEnderChars = paragraphEnderChars;
         try {
-        string[] wholeInputArray = input.Split(" ", count: 3);    // by using count keyword I check for too many input arguments
-        this.inputFile = new StreamReader(wholeInputArray[0]); 
-        this.outputFile = new StreamWriter(wholeInputArray[1]); 
-        this.symbolsPerLine = Convert.ToInt32(wholeInputArray[2]);   // by immediatelly acessing the last argument I check for too few input arguments
-        }
-        catch (Exception ex) {
-            if (ex is IndexOutOfRangeException || ex is ArgumentException){
-                Console.WriteLine("Argument error");
-                return;
+            this.inputFile = new StreamReader(input[0]); 
+            this.outputFile = new StreamWriter(input[1]); 
+            this.symbolsPerLine = Convert.ToInt32(input[2]);   // by immediatelly acessing the last argument I check for too few input arguments
+            if (input.Length != 3){throw new IndexOutOfRangeException();}
             }
+        catch (IndexOutOfRangeException) {
+            Console.WriteLine("Argument error");
+            return;
+            }
+        catch(FileNotFoundException){
+            Console.WriteLine("File error");
+            return;
         }
-    }
+        }
+    
     public int printSymbolsPerLine(){
         return symbolsPerLine;
     }
@@ -157,12 +162,14 @@ class InputOutputHandler{
 
     public void writeFormattedOutput(List<string> wordsToWrite, int sizeOfMostSpaces, int sizeOfLastSpace){
         /// writes a formatted line and terminates it with \n 
-        foreach (string word in wordsToWrite.Take(wordsToWrite.Count-2)){  // first take all but last two words
-            writeWordCharByChar(word);
-            writeSpace(sizeOfMostSpaces);
+        if (wordsToWrite.Count > 1){
+            foreach (string word in wordsToWrite.Take(wordsToWrite.Count-2)){  // first take all but last two words
+                writeWordCharByChar(word);
+                writeSpace(sizeOfMostSpaces);
+            }
+            writeWordCharByChar(wordsToWrite[wordsToWrite.Count-2]); // the last two words will be separated by different space length
+            writeSpace(sizeOfLastSpace);
         }
-        writeWordCharByChar(wordsToWrite[wordsToWrite.Count-2]); // the last two words will be separated by different space length
-        writeSpace(sizeOfLastSpace);
         writeWordCharByChar(wordsToWrite.Last());
         writeWordCharByChar("\n");
     }
