@@ -10,7 +10,7 @@
 using System;
 using System.Reflection;
 
-[assembly:System.Runtime.CompilerServices.InternalsVisibleTo("6_tests")]
+
 [assembly: System.Reflection.AssemblyCompanyAttribute("6")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
@@ -18,6 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyProductAttribute("6")]
 [assembly: System.Reflection.AssemblyTitleAttribute("6")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("_6_tests")]
 
 // Vygenerované třídou WriteCodeFragment nástroje MSBuild
 
