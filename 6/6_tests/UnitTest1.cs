@@ -4,6 +4,7 @@ namespace _6_tests;
 [TestClass]
 public class UnitTest1
 {
+    /*
     [TestMethod]
     public void TreeAdd_tryTreeOfRegularBytes(){
         // Arange
@@ -21,11 +22,61 @@ public class UnitTest1
         // Assert
         // Assert.AreEqual(tree.highestNode, firstNode);   // yes, dumb assert, but just lemme access the internals aaaa
     }
+    */
+    
+    [TestMethod]
+    public void TreeAgeSearch_regular(){
+        // Arange
+        List<int> mockupWeights = new List<int>{1, 2, 3, 3, 4, 10, 20, 50};
+        int expectedIndex = 5;
+        List<Tree> trees = new List<Tree>();
+
+        foreach (int weight in mockupWeights){
+            Node newnode = new Node(weight, 0);
+            Tree newtree = new Tree(newnode);
+            newtree.age = newtree.highestNode.weight;
+            trees.Add(newtree);
+        }
+
+        // Act
+
+        var tas = new TreeAgeSearch(5);
+
+        int index = trees.FindIndex(0, tas.isOlderThan);
+
+        // Assert
+
+        Assert.AreEqual(expectedIndex, index);
+    }
+
+    [TestMethod]
+    public void TreeAgeSearch_twoSameIndexes(){
+        // Arange
+        List<int> mockupWeights = new List<int>{1, 2, 3, 3, 4, 10, 20, 50};
+        int expectedIndex = 4;
+        List<Tree> trees = new List<Tree>();
+
+        foreach (int weight in mockupWeights){
+            Node newnode = new Node(weight, 0);
+            Tree newtree = new Tree(newnode);
+            newtree.age = newtree.highestNode.weight;
+            trees.Add(newtree);
+        }
+
+        // Act
+
+        var tas = new TreeAgeSearch(3);
+
+        int index = trees.FindIndex(0, tas.isOlderThan);
+
+        // Assert
+
+        Assert.AreEqual(expectedIndex, index);
+    }
 
     [TestMethod]
     public void occurancesDictionary_Test()
     {
-        
         // Arange
         List<byte> mockupByteInput = new List<byte>{1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5};
         ByteReaderMockup br = new ByteReaderMockup();
@@ -45,9 +96,6 @@ public class UnitTest1
         // Assert
 
         CollectionAssert.AreEqual(expectedResult, orderedOccurances);
-        
-
-
     }
 
     class ByteReaderMockup: IInputReader {

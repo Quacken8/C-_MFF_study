@@ -2,24 +2,69 @@
 
 Console.WriteLine("Hello");
 
+
 static Tree treeMaker(IInputReader byteReader) {
+
     /// function that creates a tree using data provided by byteReader
 
     Dictionary<int, int> byteOccurances = Occurances.makeDictionary(byteReader);
 
-    // turn them into a tree
+    // turn them into trees
+
+    List<Tree> trees = new List<Tree>();
 
     int age = 0;
-    List<Tree> trees = new List<Tree>(); // use index as age
-    
-    while (true){
-        
+    foreach (KeyValuePair<int, int> occurance in byteOccurances){
+        Node newnode = new Node(occurance.Value, (byte)occurance.Key);
+        newnode.leaf = true;
+        Tree newTree = new Tree(newnode);
+        newTree.age = age;
+        age++;
+        trees.Add(newTree);
+    }
+
+    // combine lowest two trees
+
+    while (trees.Count > 1){
+        Tree lowestTree = trees.First();
+        lowestTree.age++;
+        trees.RemoveAt(0);
+
+        Tree secondLowestTree = trees.First();
+        secondLowestTree.age++;
+        trees.RemoveAt(0);
+
+        secondLowestTree.addTree(lowestTree);
+
+        TreeAgeSearch tas = new TreeAgeSearch(secondLowestTree.age);
+        int indexToInsertAt = trees.FindIndex(0, tas.isOlderThan);
+        trees.Insert(indexToInsertAt, secondLowestTree);
+    }
+
+    return trees[0];
+}
+
+/// <summary>
+/// class to determine whether a tree is older than a specific age
+/// </summary>
+public class TreeAgeSearch{
+    public int age;
+    public TreeAgeSearch(int age){
+        this.age = age;
+    }
+
+    public bool isOlderThan(Tree tree){
+        return tree.age > this.age;
     }
 }
 
 public static class Occurances{
-    public static Dictionary<int, int> makeDictionary(IInputReader reader){
+    /// <summary>
     /// returns a dictionary of symbols (ints) and number of their occurances sorted by those occurances in descending order
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <returns></returns>
+    public static Dictionary<int, int> makeDictionary(IInputReader reader){
 
     Dictionary<int, int> occurances = new Dictionary<int, int>();
     bool inputExhausted = false;
@@ -45,7 +90,7 @@ public static class Occurances{
 }
 
 public interface IInputReader {
-    ///reads the next byte in file and returns it as int or returns -1 if end of file
+    ///reads the next byte in input and returns it as int or returns -1 if end of file
     public int Read();
 }
 
@@ -56,21 +101,18 @@ public class Node {
     public Node[]? childern = null;
     public Node? parent = null;
     public bool combined = false;
-    public int age;
     public bool leaf;
 
-    public Node(int weight, byte symbol, int age){
+    public Node(int weight, byte symbol){
         /// for leaf init
         this.weight = weight;
-        this.age = age;
         this.leaf = true;
         this.symbol = symbol;
     }
 
-    public Node(Node leftNode, Node rightNode, int age){
+    public Node(Node leftNode, Node rightNode){
         /// for nonleaf init from combined nodes
         this.weight = leftNode.weight + rightNode.weight;
-        this.age = age;
 
         this.childern = new Node[2]{leftNode, rightNode};
 
@@ -86,16 +128,19 @@ public class Node {
 
 
 public class Tree {
-    public Node? highestNode;
+    public Node highestNode;
 
-    public Tree(){}
+    public int age;
 
     public Tree(Node highestNode){
         this.highestNode = highestNode;
     }
 
-    static bool isFirstNodeLeft(Node firstNode, Node secondNode){
+    static bool isFirstTreeLeft(Tree firstTree, Tree secondTree){
     /// determines if firstNode should be added to the left in a tree
+        Node firstNode = firstTree.highestNode;
+        Node secondNode = firstTree.highestNode;
+
         if (firstNode.weight < secondNode.weight){
             return true;
         }
@@ -112,18 +157,18 @@ public class Tree {
             return firstNode.symbol < secondNode.symbol;
         }
         else if (!firstNode.leaf && !secondNode.leaf){
-            return firstNode.age < secondNode.age;
+            return firstTree.age < secondTree.age;
         }
         return true;
 }
 
-    public void addNode(Node node, int age){
+    public void addTree(Tree tree){
         /// adds a node to the tree in such a way to accomodate the left-right rules
-        if (isFirstNodeLeft(this.highestNode, node)){
-            this.highestNode = new Node(this.highestNode, node, age);
+        if (isFirstTreeLeft(this, tree)){
+            this.highestNode = new Node(this.highestNode, tree.highestNode);
         }
         else {
-            this.highestNode = new Node(node, this.highestNode, age);
+            this.highestNode = new Node(tree.highestNode, this.highestNode);
         }
     }
 
@@ -133,7 +178,7 @@ public class Tree {
  
         string toPrint = "";
 
-        Node? workingNode = null;
+        Node workingNode = unexploredIntersections.Last();
 
         while(unexploredIntersections.Count != 0){
             workingNode = unexploredIntersections.Last();
