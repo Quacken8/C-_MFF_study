@@ -21,14 +21,14 @@ static Tree treeMaker(IInputReader byteReader) {
 
     /// function that creates a tree using data provided by byteReader
 
-    Dictionary<int, int> byteOccurances = Occurances.makeDictionary(byteReader);
+    Dictionary<int, long> byteOccurances = Occurances.makeDictionary(byteReader);
 
     // turn them into trees
 
     List<Tree> trees = new List<Tree>();
 
     int age = 0;
-    foreach (KeyValuePair<int, int> occurance in byteOccurances){
+    foreach (KeyValuePair<int, long> occurance in byteOccurances){
         Node newnode = new Node(occurance.Value, (byte)occurance.Key);
         newnode.leaf = true;
         Tree newTree = new Tree(newnode);
@@ -84,9 +84,10 @@ public static class Occurances{
     /// </summary>
     /// <param name="reader"></param>
     /// <returns></returns>
-    public static Dictionary<int, int> makeDictionary(IInputReader reader){
+    public static Dictionary<int, long> makeDictionary(IInputReader reader){
 
-        Dictionary<int, int> occurances = new Dictionary<int, int>();
+        //Dictionary<int, long> occurances = new Dictionary<int, long>();
+        long[] arrayOccurances = new long[256];
         bool inputExhausted = false;
     
         int symbol;
@@ -96,13 +97,15 @@ public static class Occurances{
                 inputExhausted = true;  // redundancy for clarity
                 break;
             }
-            try {
-                occurances[symbol]++;
-            }
-            catch (KeyNotFoundException){
-                occurances.Add(symbol, 1);
-            }
+            arrayOccurances[symbol]++;
         }
+        Dictionary<int, long> occurances = new Dictionary<int, long>();
+        int index = 0;
+        foreach (long occurance in arrayOccurances){
+            occurances.Add(index, occurance);
+            index++;
+        }
+        
         var orderedOccurances = occurances.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
     
         return orderedOccurances;
@@ -126,14 +129,14 @@ public class myReader : IInputReader {
 
 public class Node {
     /// Node in Huffman binary tree. Node's symbol is the piece of information it represents and its weight is the number of occurances of the information in input 
-    public int weight;
+    public long weight;
     public byte? symbol = null;
     public Node[]? childern = null;
     public Node? parent = null;
     public bool combined = false;
     public bool leaf;
 
-    public Node(int weight, byte symbol){
+    public Node(long weight, byte symbol){
         /// for leaf init
         this.weight = weight;
         this.leaf = true;

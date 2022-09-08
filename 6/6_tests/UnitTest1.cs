@@ -27,14 +27,14 @@ public class UnitTest1
     [TestMethod]
     public void TreeAgeSearch_regular(){
         // Arange
-        List<int> mockupWeights = new List<int>{1, 2, 3, 3, 4, 10, 20, 50};
+        List<long> mockupWeights = new List<long>{1, 2, 3, 3, 4, 10, 20, 50};
         int expectedIndex = 5;
         List<Tree> trees = new List<Tree>();
 
         foreach (int weight in mockupWeights){
             Node newnode = new Node(weight, 0);
             Tree newtree = new Tree(newnode);
-            newtree.age = newtree.highestNode.weight;
+            newtree.age = (int)newtree.highestNode.weight;
             trees.Add(newtree);
         }
 
@@ -52,14 +52,14 @@ public class UnitTest1
     [TestMethod]
     public void TreeAgeSearch_twoSameIndexes(){
         // Arange
-        List<int> mockupWeights = new List<int>{1, 2, 3, 3, 4, 10, 20, 50};
+        List<long> mockupWeights = new List<long>{1, 2, 3, 3, 4, 10, 20, 50};
         int expectedIndex = 4;
         List<Tree> trees = new List<Tree>();
 
         foreach (int weight in mockupWeights){
             Node newnode = new Node(weight, 0);
             Tree newtree = new Tree(newnode);
-            newtree.age = newtree.highestNode.weight;
+            newtree.age = (int)newtree.highestNode.weight;
             trees.Add(newtree);
         }
 
