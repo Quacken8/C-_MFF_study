@@ -1,7 +1,21 @@
 ﻿[assembly:System.Runtime.CompilerServices.InternalsVisibleTo("6_tests")]    // to make testing *not* hell
 
-Console.WriteLine("Hello");
+string filename;
+try {
+    filename = args[0];
+}
+catch (IndexOutOfRangeException){
+    throw new ArgumentException();
+}
+if (args.Count() > 1){
+    throw new ArgumentException();
+}
 
+
+myReader reader = new myReader(filename);
+
+Tree tree = treeMaker(reader);
+Console.WriteLine(tree.ToString());
 
 static Tree treeMaker(IInputReader byteReader) {
 
@@ -38,7 +52,13 @@ static Tree treeMaker(IInputReader byteReader) {
 
         TreeAgeSearch tas = new TreeAgeSearch(secondLowestTree.age);
         int indexToInsertAt = trees.FindIndex(0, tas.isOlderThan);
-        trees.Insert(indexToInsertAt, secondLowestTree);
+        if (indexToInsertAt == -1){
+            trees.Add(secondLowestTree);
+        }
+        else {
+            trees.Insert(indexToInsertAt, secondLowestTree);
+        }
+
     }
 
     return trees[0];
@@ -66,32 +86,42 @@ public static class Occurances{
     /// <returns></returns>
     public static Dictionary<int, int> makeDictionary(IInputReader reader){
 
-    Dictionary<int, int> occurances = new Dictionary<int, int>();
-    bool inputExhausted = false;
-
-    int symbol;
-    while (!inputExhausted) {
-        symbol = reader.Read();
-        if (symbol == -1) {
-            inputExhausted = true;  // redundancy for clarity
-            break;
+        Dictionary<int, int> occurances = new Dictionary<int, int>();
+        bool inputExhausted = false;
+    
+        int symbol;
+        while (!inputExhausted) {
+            symbol = reader.Read();
+            if (symbol == -1) {
+                inputExhausted = true;  // redundancy for clarity
+                break;
+            }
+            try {
+                occurances[symbol]++;
+            }
+            catch (KeyNotFoundException){
+                occurances.Add(symbol, 1);
+            }
         }
-        try {
-            occurances[symbol]++;
-        }
-        catch (KeyNotFoundException){
-            occurances.Add(symbol, 1);
-        }
+        var orderedOccurances = occurances.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+    
+        return orderedOccurances;
     }
-    var orderedOccurances = occurances.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-
-    return orderedOccurances;
-}
 }
 
 public interface IInputReader {
     ///reads the next byte in input and returns it as int or returns -1 if end of file
     public int Read();
+}
+public class myReader : IInputReader {
+    Stream stream;
+    public myReader(string filename){
+        this.stream = File.OpenRead(filename);
+    }
+
+    public int Read(){
+        return stream.ReadByte();
+    }
 }
 
 public class Node {
