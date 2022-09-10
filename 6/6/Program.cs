@@ -42,7 +42,7 @@ static Tree treeMaker(IInputReader byteReader) {
     while (trees.Count > 1){
         Tree lowestTree = trees.First();
         lowestTree.age++;
-        trees.RemoveAt(0);
+        trees.RemoveAt(0);  // dequeue wouldve been better
 
         Tree secondLowestTree = trees.First();
         secondLowestTree.age++;
@@ -105,7 +105,7 @@ public static class Occurances{
             occurances.Add(index, occurance);
             index++;
         }
-        
+
         var orderedOccurances = occurances.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
     
         return orderedOccurances;
