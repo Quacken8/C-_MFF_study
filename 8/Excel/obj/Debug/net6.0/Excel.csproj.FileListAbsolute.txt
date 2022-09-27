@@ -1,0 +1,15 @@
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.csproj.AssemblyReference.cache
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.GeneratedMSBuildEditorConfig.editorconfig
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.AssemblyInfoInputs.cache
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.AssemblyInfo.cs
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.csproj.CoreCompileInputs.cache
+/home/ondra/Dokumenty/C#_MFF/8/Excel/bin/Debug/net6.0/Excel
+/home/ondra/Dokumenty/C#_MFF/8/Excel/bin/Debug/net6.0/Excel.deps.json
+/home/ondra/Dokumenty/C#_MFF/8/Excel/bin/Debug/net6.0/Excel.runtimeconfig.json
+/home/ondra/Dokumenty/C#_MFF/8/Excel/bin/Debug/net6.0/Excel.dll
+/home/ondra/Dokumenty/C#_MFF/8/Excel/bin/Debug/net6.0/Excel.pdb
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.dll
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/refint/Excel.dll
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.pdb
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/Excel.genruntimeconfig.cache
+/home/ondra/Dokumenty/C#_MFF/8/Excel/obj/Debug/net6.0/ref/Excel.dll
